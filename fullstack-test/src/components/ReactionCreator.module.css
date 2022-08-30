@@ -1,9 +1,0 @@
-@import "../styles/colors.module.css";
-
-.emojiButton {
-    background-color: var(--primary-dark-900);
-    border:0;
-    margin-right: 10px;
-    padding: 0;
-    width: auto;
-  }

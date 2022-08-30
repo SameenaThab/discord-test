@@ -1,24 +1,18 @@
 const path = require("path");
 const Datastore = require("../lib/datastore");
 const sortUtil = require("../util/sort");
-const { MESSAGE_LIMIT } = require("../constants");
 
 const db = new Datastore({
   filename: path.join(__dirname, "../data/reactions.db"),
 });
 
-
-// enum Emoji {
-//     Like,Love,Lol
-//   }
-
 class Reaction {
   constructor(rawReaction) {
-    const { _id: id, messageId, userId , emojiId, createdAt} = rawReaction;
+    const { _id: id, messageId, userId , emoji, createdAt} = rawReaction;
     this.createdAt = createdAt == null ? Date.now() : createdAt;
     this.id = id;
     this.messageId = messageId
-    this.emojiId = emojiId;
+    this.emoji = emoji;
     this.userId = userId;
   }
 
@@ -49,23 +43,18 @@ class Reaction {
       );
   }
 
-  // static getByCount(messageId) {
-  //   return db
-  //     .count({ messageId,emoji});
-  // }
-
   save() {
-    try {
-      return db.update({ _id: this.id }, this.serialize(), { upsert: true });
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    return db.update({ _id: this.id }, this.serialize(), { upsert: true });
+  }
+
+  delete() {
+    return db.remove({ _id: this.id });
   }
 
   serialize() {
     return {
       messageId: this.messageId,
-      emojiId: this.emojiId,
+      emoji: this.emoji,
       createdAt: this.createdAt,
       userId: this.userId,
     };

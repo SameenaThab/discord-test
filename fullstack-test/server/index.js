@@ -109,10 +109,10 @@ app.post("/channels/:channelId/messages", async (req, res) => {
 
 app.post("/messages/:messageId/reactions", async (req, res) => {
   const { userId } = req.session;
-  const { emojiId } = req.body;
+  const { emoji } = req.body;
   const { messageId } = req.params;
-  const message = new Reaction({ messageId, userId, emojiId });
-  await message.save();
+  const reaction = new Reaction({ messageId, userId, emoji });
+  await reaction.save();
   fetchAndEmitReactions(socketServer);
   res.status(200).send();
 });
@@ -131,7 +131,16 @@ app.patch("/channels/:channelId/messages/:messageId", async (req, res) => {
       return res.status(500).send({ error: error.message });
     }
   }
+  res.status(200).send();
+});
 
+app.delete("/reactions/:reactionId", async (req, res) => {
+  const { reactionId } = req.params;
+  const reaction = await Reaction.getById(reactionId);
+  console.log("hello world");
+  console.log(reaction);
+  await reaction.delete();
+  fetchAndEmitReactions(socketServer);
   res.status(200).send();
 });
 
@@ -145,6 +154,9 @@ socketServer.sockets.on("connection", (socket) => {
   socket.on(constants.clientEvents.FETCH_ALL_USERS, () =>
     fetchAndEmitUsers(socket)
   );
+  socket.on(constants.clientEvents.FETCH_ALL_REACTIONS, () =>
+  fetchAndEmitReactions(socket)
+);
 });
 
 httpServer.listen(8000, function () {

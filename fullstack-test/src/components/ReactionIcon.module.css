@@ -1,0 +1,17 @@
+@import "../styles/colors.module.css";
+
+.emojiButton {
+    background-color: var(--primary-dark-700);
+    border:0;
+    border-radius: 3px;
+    margin-right: 5px;
+    color: var(--white);
+    padding: 5;
+    width: auto;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .statusIndicatorOnline {
+    background-color: var(--brand-500);
+  }

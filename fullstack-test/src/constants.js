@@ -8,6 +8,7 @@ export const clientEvents = keyMirror({
   FETCH_ALL_MESSAGES: null,
   FETCH_ALL_CHANNELS: null,
   FETCH_ALL_USERS: null,
+  FETCH_ALL_REACTIONS:null,
   CREATE_CHANNEL: null,
   CREATE_MESSAGE: null,
   EDIT_MESSAGE: null,
@@ -16,16 +17,17 @@ export const clientEvents = keyMirror({
   LOG_OUT: null,
 });
 
-export const emojiReactions = keyMirror({
+export const emojiReactions = {
   LIKE: '👍',
   LOVE: '❤️',
   LOL: '😂',
-});
+};
 
 export const serverEvents = keyMirror({
   UPDATE_ALL_MESSAGES: null,
   UPDATE_ALL_CHANNELS: null,
   UPDATE_ALL_USERS: null,
+  UPDATE_ALL_REACTIONS:null,
 });
 
 export const MESSAGE_LIMIT = 256;

@@ -6,6 +6,7 @@ import { useMessageStore } from "../stores/messages";
 import { useUserStore } from "../stores/users";
 import MessageEditor from "./MessageEditor";
 import styles from "./MessageViewer.module.css";
+import ReactionCreator from "../components/ReactionCreator";
 
 const Message = ({ content, createdAt, id, userId, channelId }) => {
   const [isEditing, setIsEditing] = React.useState(false);
@@ -16,7 +17,7 @@ const Message = ({ content, createdAt, id, userId, channelId }) => {
   const dateInstance = React.useMemo(() => new Date(createdAt), [createdAt]);
 
   return (
-    <div className={styles.message}>
+    <div className={styles.message}> 
       <div className={styles.metadata}>
         {user == null ? null : (
           <span className={styles.username}>{user.username}</span>
@@ -56,7 +57,6 @@ const MessageViewer = () => {
     [activeChannelId, allMessages]
   );
   const isEmpty = messagesForActiveChannel.length === 0;
-
   return (
     <div
       className={classnames(styles.wrapper, { [styles.wrapperEmpty]: isEmpty })}
@@ -70,14 +70,17 @@ const MessageViewer = () => {
         </div>
       ) : (
         messagesForActiveChannel.map((message) => (
-          <Message
-            channelId={activeChannelId}
-            key={message.id}
-            id={message.id}
-            content={message.content}
-            createdAt={message.createdAt}
-            userId={message.userId}
-          />
+          <div key={message.id} className={styles.empty}>
+            <Message
+              channelId={activeChannelId}
+              key={message.id}
+              id={message.id}
+              content={message.content}
+              createdAt={message.createdAt}
+              userId={message.userId}
+            />
+            <ReactionCreator messageId={message.id}/>
+          </div>
         ))
       )}
     </div>

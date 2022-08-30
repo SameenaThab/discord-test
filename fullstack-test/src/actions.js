@@ -36,6 +36,10 @@ export const editMessage = async ({ messageId, channelId, content }) => {
   });
 };
 
-export const createReaction = async (messageId,emojiId) => {
-  await axios.post(getRoute(`/messages/${messageId}/reactions`), { emojiId });
+export const createReaction = async (messageId,emoji) => {
+  await axios.post(getRoute(`/messages/${messageId}/reactions`), { emoji });
+};
+
+export const deleteReaction = async (reactionId) => {
+  await axios.delete(getRoute(`/reactions/${reactionId}`));
 };

@@ -6,9 +6,9 @@ export const [useReactionStore, reactionStoreApi] = create((set) => ({
     reactions: [],
 }));
 
-export const initializeMessageStore = () => {
+export const initializeReactionStore = () => {
   socket.on(serverEvents.UPDATE_ALL_REACTIONS, (reactions) =>
-    api.setState({ reactions })
+  reactionStoreApi.setState({ reactions })
   );
   socket.emit(clientEvents.FETCH_ALL_REACTIONS);
 };
