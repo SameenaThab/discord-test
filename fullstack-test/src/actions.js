@@ -35,3 +35,7 @@ export const editMessage = async ({ messageId, channelId, content }) => {
     content,
   });
 };
+
+export const createReaction = async (messageId,emojiId) => {
+  await axios.post(getRoute(`/messages/${messageId}/reactions`), { emojiId });
+};

@@ -10,6 +10,7 @@ class Datastore extends NedbDatastore {
     this.insert = util.promisify(super.insert.bind(this));
     this.remove = util.promisify(super.remove.bind(this));
     this.findOne = util.promisify(super.findOne.bind(this));
+    this.count = util.promisify(super.count.bind(this));
   }
 }
 

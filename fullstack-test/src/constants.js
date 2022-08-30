@@ -16,6 +16,12 @@ export const clientEvents = keyMirror({
   LOG_OUT: null,
 });
 
+export const emojiReactions = keyMirror({
+  LIKE: '👍',
+  LOVE: '❤️',
+  LOL: '😂',
+});
+
 export const serverEvents = keyMirror({
   UPDATE_ALL_MESSAGES: null,
   UPDATE_ALL_CHANNELS: null,

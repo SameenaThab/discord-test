@@ -4,6 +4,7 @@ const http = require("http");
 const socketIo = require("socket.io");
 const Channel = require("./models/channel");
 const Message = require("./models/message");
+const Reaction = require("./models/reaction");
 const User = require("./models/user");
 const constants = require("./constants");
 
@@ -53,6 +54,11 @@ const fetchAndEmitUsers = async (socket) => {
   );
 };
 
+const fetchAndEmitReactions = async (socket) => {
+  const reactions = await Reaction.getAll();
+  socket.emit(constants.serverEvents.UPDATE_ALL_REACTIONS, reactions);
+};
+
 app.post("/login", (req, res) => {
   const { id } = req.body;
   req.session.userId = id;
@@ -98,6 +104,16 @@ app.post("/channels/:channelId/messages", async (req, res) => {
   const message = new Message({ channelId, userId, content });
   await message.save();
   fetchAndEmitMessages(socketServer);
+  res.status(200).send();
+});
+
+app.post("/messages/:messageId/reactions", async (req, res) => {
+  const { userId } = req.session;
+  const { emojiId } = req.body;
+  const { messageId } = req.params;
+  const message = new Reaction({ messageId, userId, emojiId });
+  await message.save();
+  fetchAndEmitReactions(socketServer);
   res.status(200).send();
 });
 
