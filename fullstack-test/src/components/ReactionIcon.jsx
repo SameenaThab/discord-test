@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { createReaction, deleteReaction } from "../actions";
 import styles from "./ReactionIcon.module.css";
 import { useReactionStore } from "../stores/reactions";
